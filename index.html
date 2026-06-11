@@ -749,10 +749,26 @@
             .founder-grid,
             .values-grid,
             .footer-grid { grid-template-columns: 1fr; }
-            .about-image-wrap { display: none; }
-            .founder-photo-col { position: static; }
             
-            /* Correção para as fotos reaparecerem no telemóvel */
+            /* Oculta apenas a imagem genérica do topo */
+            .about-image-wrap { display: none !important; }
+            
+            /* Correção Crítica para garantir que a foto da Inês aparece no telemóvel */
+            .founder-photo-col { 
+                position: static !important; 
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                max-width: 280px;
+                margin: 0 auto 32px auto; /* Centra a foto por cima do texto */
+            }
+            .founder-photo-wrap img {
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+            }
+            
+            /* Parallax Off para performance mobile */
             .hero-bg-image,
             .testimonials-bg { 
                 background-attachment: scroll !important; 
@@ -791,7 +807,7 @@
         <div class="container hero-content hero">
             <span class="section-tag">Coaching & Neurociência</span>
             <h1>Eleve-se com<br><em>Coaching Dynavision®</em></h1>
-            <p class="subtitle">Reconheça padrões inconscientes, crie uma visão clara e avance com a confidence necessária para alcançar os seus verdadeiros objetivos.</p>
+            <p class="subtitle">Reconheça padrões inconscientes, crie uma visão clara e avance com a confiança necessária para alcançar os seus verdadeiros objetivos.</p>
             <div class="hero-cta-group">
                 <a href="https://wa.me/351916790183" class="btn btn-primary" target="_blank">Agendar Conversa Inicial Gratuita</a>
                 <a href="#sobre" class="btn btn-secondary">Saber mais</a>
