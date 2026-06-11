@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynavision® | Eleve-se com Coaching & Neurociência</title>
-    <!-- Google Fonts - Inter para o look moderno e limpo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #FBFBFA; /* Off-white linho */
+            --bg-color: #FBFBFA; 
             --card-bg: #FFFFFF;
-            --apple-gray-light: #F2F2EE; /* Cinza-oliva muito suave */
-            --text-dark: #1E2522; /* Carvão botânico */
+            --apple-gray-light: #F2F2EE; 
+            --text-dark: #1E2522; 
             --text-muted: #606863;
-            --accent-green-deep: #2E4A3F; /* Verde floresta fechado */
-            --accent-green-sage: #8F9E8B; /* Verde sálvia suave */
+            --accent-green-deep: #2E4A3F; 
+            --accent-green-sage: #8F9E8B; 
             --accent-green-hover: #1F332B;
             --border-color: #E1E3DE;
             --max-width: 1100px;
@@ -41,7 +40,6 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            display: block !important;
         }
 
         @keyframes pulseGlow {
@@ -50,22 +48,23 @@
             100% { box-shadow: 0 0 0 0 rgba(143, 158, 139, 0); }
         }
 
-        /* Utility Classes */
         .container {
             max-width: var(--max-width);
             margin: 0 auto;
             padding: 0 24px;
+            position: relative;
+            z-index: 2;
         }
 
-        /* CORREÇÃO: Menos espaço entre as secções (reduzido de 120px para 60px) */
         .section-padding {
-            padding: 60px 0;
+            padding: 120px 0;
+            position: relative;
         }
 
         .text-center { text-align: center; }
         .text-left { text-align: left; }
 
-        /* Buttons executivos arredondados */
+        /* Buttons */
         .btn {
             display: inline-block;
             font-size: 14px;
@@ -108,12 +107,12 @@
             display: block;
         }
 
-        /* Header / Navigation */
+        /* Header */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: rgba(251, 251, 250, 0.9);
+            background-color: rgba(251, 251, 250, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
@@ -158,15 +157,53 @@
             font-weight: 500;
             opacity: 1;
         }
-        .nav-btn:hover {
-            background-color: var(--accent-green-hover);
+
+        /* CORREÇÃO DO PARALLAX FLOATING EFFECT */
+        .parallax-section {
+            position: relative;
+            overflow: hidden;
+            background: transparent;
         }
 
-        /* Hero Section - Compactado */
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        /* Usamos o 'fixed' para garantir que as duas secções partilham o mesmo plano de fundo */
+        @media (min-width: 769px) {
+            .parallax-bg {
+                background-attachment: fixed;
+            }
+        }
+
+        /* Máscaras suaves para legibilidade */
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(251,251,250,0.85) 0%, rgba(242,242,238,0.5) 100%);
+        }
+
+        .testimonials-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(242,242,238,0.6) 0%, rgba(251,251,250,0.75) 100%);
+        }
+
+        /* Hero */
         .hero {
-            padding-top: 130px; /* Reduzido o topo para colar mais ao header fixo */
-            padding-bottom: 60px;
-            background-color: var(--apple-gray-light);
+            padding-top: 200px;
+            padding-bottom: 140px;
         }
 
         .hero h1 {
@@ -181,20 +218,23 @@
         .hero p.subtitle {
             font-size: 22px;
             font-weight: 400;
-            color: var(--text-muted);
+            color: var(--text-dark);
             max-width: 740px;
             margin: 0 auto 32px auto;
-            letter-spacing: -0.015em;
+            opacity: 0.9;
         }
 
-        /* Agitation / Questions Section - Margens mais curtas */
+        /* Agitation Section */
         .status-check {
             background-color: var(--card-bg);
             border-radius: 32px;
-            padding: 40px 40px;
+            padding: 40px;
+            margin-top: -40px;
             margin-bottom: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.02);
+            box-shadow: 0 30px 60px rgba(46,74,63,0.05);
             border: 1px solid var(--border-color);
+            position: relative;
+            z-index: 10;
         }
 
         .status-grid {
@@ -210,16 +250,6 @@
             border-radius: 20px;
             font-weight: 500;
             font-size: 15px;
-            color: var(--text-dark);
-            border: 1px solid transparent;
-            transition: var(--transition);
-        }
-
-        .status-card:hover {
-            background: var(--card-bg);
-            border-color: var(--accent-green-sage);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(143, 158, 139, 0.1);
         }
 
         /* Section Typography */
@@ -229,7 +259,7 @@
             text-transform: uppercase;
             letter-spacing: 0.15em;
             color: var(--accent-green-deep);
-            background: rgba(143, 158, 139, 0.15);
+            background: rgba(46, 74, 63, 0.1);
             padding: 6px 16px;
             border-radius: 20px;
             display: inline-block;
@@ -241,17 +271,16 @@
             font-weight: 600;
             letter-spacing: -0.03em;
             margin-bottom: 16px;
-            color: var(--text-dark);
         }
 
         .section-desc {
             font-size: 18px;
             color: var(--text-muted);
             max-width: 680px;
-            margin: 0 auto 40px auto; /* Reduzido de 60px para 40px */
+            margin: 0 auto 40px auto;
         }
 
-        /* Pillars Section */
+        /* Pillars */
         .pillars-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -263,20 +292,12 @@
             border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 32px;
-            transition: var(--transition);
-        }
-
-        .pillar-item:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
-            border-color: var(--accent-green-deep);
-            transform: scale(1.01);
         }
 
         .pillar-item h3 {
             font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
             color: var(--accent-green-deep);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -288,38 +309,9 @@
             height: 20px;
             background-color: var(--accent-green-sage);
             border-radius: 4px;
-            display: inline-block;
         }
 
-        .pillar-item p {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        /* Quote Separator - Mais integrado */
-        .quote-box {
-            background-color: var(--apple-gray-light);
-            padding: 50px 40px;
-            font-size: 22px;
-            font-weight: 400;
-            font-style: italic;
-            color: var(--text-dark);
-            border-radius: 32px;
-            margin: 40px 0;
-            border-left: 4px solid var(--accent-green-deep);
-        }
-        .quote-author {
-            font-size: 13px;
-            font-style: normal;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-top: 12px;
-            display: block;
-        }
-
-        /* Services Grid */
+        /* Services */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -335,13 +327,6 @@
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            transition: var(--transition);
-        }
-
-        .service-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 24px 48px rgba(46, 74, 63, 0.06);
-            border-color: var(--accent-green-sage);
         }
 
         .service-card.featured {
@@ -360,43 +345,17 @@
             padding: 6px 14px;
             border-radius: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .service-card h3 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--accent-green-deep);
-        }
-
-        .service-card p {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 28px;
-            flex-grow: 1;
         }
 
         .service-price {
             font-size: 30px;
             font-weight: 700;
-            margin-bottom: 20px;
-            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
             padding-top: 20px;
-            color: var(--text-dark);
-        }
-        .service-price span {
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
         }
 
         /* Testimonials */
-        .testimonials {
-            background-color: var(--apple-gray-light);
-        }
-
         .testimonial-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -408,146 +367,67 @@
             padding: 32px;
             border-radius: 24px;
             border: 1px solid var(--border-color);
-            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
 
-        .testimonial-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 32px rgba(0,0,0,0.04);
-            border-color: var(--accent-green-sage);
-        }
-
-        .stars {
-            color: var(--accent-green-sage);
-            margin-bottom: 12px;
-            font-size: 15px;
-            letter-spacing: 2px;
-        }
-
-        .testimonial-text {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .testimonial-author {
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--accent-green-deep);
-        }
-
-        /* Contact Section */
-        .contact-section {
-            background-color: var(--bg-color);
-        }
-
+        /* Form */
         .form-container {
             max-width: 600px;
             margin: 0 auto;
             background: var(--card-bg);
             padding: 36px;
             border-radius: 32px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.04);
             border: 1px solid var(--border-color);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.04);
         }
 
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: var(--text-dark);
-        }
-
+        .form-group { margin-bottom: 16px; }
         .form-control {
             width: 100%;
             padding: 12px 14px;
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            font-size: 15px;
-            font-family: inherit;
             background-color: var(--apple-gray-light);
-            color: var(--text-dark);
-            transition: var(--transition);
+            font-family: inherit;
         }
-
         .form-control:focus {
             outline: none;
-            background-color: var(--card-bg);
             border-color: var(--accent-green-deep);
-            box-shadow: 0 0 0 4px rgba(46, 74, 63, 0.15);
+            background-color: var(--card-bg);
         }
 
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 6px;
-        }
-
+        .radio-group { display: flex; flex-direction: column; gap: 8px; }
         .radio-option {
             display: flex;
             align-items: center;
             background: var(--apple-gray-light);
             padding: 10px 14px;
             border-radius: 12px;
-            border: 1px solid transparent;
             cursor: pointer;
-            font-size: 14px;
-            transition: var(--transition);
         }
+        .radio-option input { margin-right: 12px; accent-color: var(--accent-green-deep); }
 
-        .radio-option:hover {
-            background-color: var(--card-bg);
-            border-color: var(--accent-green-sage);
-        }
-
-        .radio-option input {
-            margin-right: 12px;
-            width: 16px;
-            height: 16px;
-            accent-color: var(--accent-green-deep);
-        }
-
-        /* WhatsApp Floating Button */
+        /* Floating Button */
         .whatsapp-float {
             position: fixed;
             bottom: 32px;
             right: 32px;
             background-color: var(--card-bg);
-            color: var(--text-dark);
             padding: 14px 24px;
             border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
+            color: var(--text-dark);
             display: flex;
             align-items: center;
             gap: 10px;
             z-index: 999;
             border: 1px solid var(--border-color);
-            transition: var(--transition);
         }
 
-        .whatsapp-float:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(46, 74, 63, 0.15);
-            border-color: var(--accent-green-deep);
-        }
-
-        .whatsapp-icon-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #25D366;
-            border-radius: 50%;
-            display: inline-block;
-        }
+        .whatsapp-icon-dot { width: 10px; height: 10px; background-color: #25D366; border-radius: 50%; }
 
         /* Footer */
         footer {
@@ -558,65 +438,25 @@
             border-top: 1px solid var(--border-color);
         }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-bottom: 32px;
-        }
+        .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 32px; }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; justify-content: space-between; }
 
-        .footer-col h4 {
-            color: var(--text-dark);
-            margin-bottom: 14px;
-            font-weight: 600;
-        }
-
-        .footer-col ul li {
-            list-style: none;
-            margin-bottom: 8px;
-        }
-
-        .footer-col ul li a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--accent-green-deep);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border-color);
-            padding-top: 24px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Responsive Breakpoints */
         @media (max-width: 768px) {
             .hero h1 { font-size: 38px; }
-            .hero p.subtitle { font-size: 18px; }
-            .status-grid, .pillars-grid, .services-grid, .testimonial-grid, .footer-grid {
-                grid-template-columns: 1fr;
-            }
-            .section-padding { padding: 40px 0; }
-            .section-title { font-size: 30px; }
-            .form-container { padding: 28px 20px; }
+            .status-grid, .pillars-grid, .services-grid, .testimonial-grid, .footer-grid { grid-template-columns: 1fr; }
+            .parallax-bg { background-attachment: scroll !important; }
             nav a:not(.nav-btn) { display: none; }
-            .whatsapp-float { bottom: 20px; right: 20px; padding: 12px 18px; }
+            .status-check { margin-top: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Botão Flutuante WhatsApp -->
-    <a href="https://wa.me/351916790183?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Coaching%20Dynavision." class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/351916790183" class="whatsapp-float" target="_blank">
         <span class="whatsapp-icon-dot"></span>
         <span>Mensagem direta</span>
     </a>
 
-    <!-- Header / Navigation -->
     <header>
         <div class="container nav-container">
             <a href="#" class="logo">Dynavision®</a>
@@ -629,269 +469,150 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero text-center">
+    <!-- SECÇÃO 1: HERO (PARALLAX FIXO) -->
+    <section class="section-padding parallax-section hero text-center">
+        <div class="parallax-bg hero-bg"></div>
         <div class="container">
             <span class="section-tag">Coaching & Neurociência</span>
             <h1>Eleve-se com Coaching Dynavision®</h1>
             <p class="subtitle">Reconheça padrões inconscientes, crie uma visão clara e avance com a confiança necessária para alcançar os seus verdadeiros objetivos.</p>
             <div>
-                <a href="https://wa.me/351916790183?text=Ol%C3%A1%20In%C3%AAs%21%20Gostaria%20de%20agendar%20a%20minha%20Conversa%20Inicial%20Gratuita%20de%2015%20minutos." class="btn btn-primary" target="_blank">Agendar Conversa Inicial Gratuita</a>
+                <a href="https://wa.me/351916790183" class="btn btn-primary" target="_blank">Agendar Conversa Inicial Gratuita</a>
                 <span class="cta-caption">O clique abrirá instantaneamente a aplicação do WhatsApp.</span>
             </div>
         </div>
     </section>
 
-    <!-- Agitation Section -->
-    <section class="container text-center" style="padding-top: 40px; padding-bottom: 40px;">
+    <!-- Agitation -->
+    <section class="container text-center" style="position: relative; z-index: 5;">
         <div class="status-check">
-            <h3 style="font-size: 22px; font-weight: 600; color: var(--accent-green-deep);">Identifica-se com algum destes cenários?</h3>
+            <h3 style="font-size: 22px; color: var(--accent-green-deep);">Identifica-se com algum destes cenários?</h3>
             <div class="status-grid">
                 <div class="status-card">"Sinto que sei exatamente o que quero, mas não sei por onde começar."</div>
                 <div class="status-card">"Estou a viver em piloto automático, sem rumo definido."</div>
-                <div class="status-card">"Preciso que a minha vida ganhe uma direção clara e entusiasmo real."</div>
+                <div class="status-card">"Preciso que a minha vida ganhe uma direção clara."</div>
             </div>
-            <p style="margin-top: 28px; color: var(--text-muted); font-size: 16px; font-weight: 500;">Se quer iniciar um novo ciclo, a sua jornada de transformação começa aqui. Vamos caminhar lado a lado.</p>
         </div>
     </section>
 
-    <!-- O que Fazemos / Filosofia -->
+    <!-- Sobre / Filosofia -->
     <section id="sobre" class="section-padding text-center">
         <div class="container">
             <span class="section-tag">A nossa Abordagem</span>
             <h2 class="section-title">Transformação com Base Científica</h2>
-            <p class="section-desc">Combinamos a metodologia de coaching com princípios práticos da neurociência e psicologia para promover mudanças profundas, sustentáveis e de longo prazo.</p>
+            <p class="section-desc">Combinamos a metodologia de coaching com princípios práticos da neurociência para promover mudanças sustentáveis.</p>
             
             <div class="pillars-grid text-left" id="pilares">
-                <div class="pillar-item">
-                    <h3>Visão Interior</h3>
-                    <p>Aprofundamos o autoconhecimento para identificar forças, valores e o que realmente importa. Uma visão clara é o pilar estrutural.</p>
-                </div>
-                <div class="pillar-item">
-                    <h3>Propósito Definido</h3>
-                    <p>Exploramos e moldamos o seu propósito, oferecendo o suporte para que alcance as suas metas de forma alinhada com o que valoriza.</p>
-                </div>
-                <div class="pillar-item">
-                    <h3>A Mente em Ação</h3>
-                    <p>Compreendemos o funcionamento do cérebro para colocá-lo ao serviço dos seus objetivos, transformando barreiras invisíveis em conquistas.</p>
-                </div>
-                <div class="pillar-item">
-                    <h3>Parceria Transformadora</h3>
-                    <p>Suporte personalizado e altamente focado em cada fase do processo para desenvolver resiliência e manter o entusiasmo constante.</p>
-                </div>
-            </div>
-
-            <div class="quote-box">
-                “The view you adopt for yourself profoundly affects the way you lead your life.”
-                <span class="quote-author">— Carol S. Dweck, Mindset</span>
+                <div class="pillar-item"><h3>Visão Interior</h3><p>Aprofundamos o autoconhecimento para identificar forças e valores reais.</p></div>
+                <div class="pillar-item"><h3>Propósito Definido</h3><p>Exploramos e moldamos o seu propósito de forma alinhada.</p></div>
+                <div class="pillar-item"><h3>A Mente em Ação</h3><p>Compreendemos o cérebro para colocá-lo ao serviço dos seus objetivos.</p></div>
+                <div class="pillar-item"><h3>Parceria Transformadora</h3><p>Suporte personalizado focado em manter o entusiasmo constante.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Services / Programs Section -->
-    <section id="servicos" class="section-padding text-center" style="background-color: var(--apple-gray-light);">
+    <!-- Programas -->
+    <section id="servicos" class="section-padding text-center" style="background-color: var(--apple-gray-light); z-index: 5;">
         <div class="container">
             <span class="section-tag">Programas</span>
             <h2 class="section-title">Encontre o formato ideal para si</h2>
-            <p class="section-desc">Soluções estruturadas e flexíveis para objetivos individuais, em casal ou em dinâmicas de grupo.</p>
-            
             <div class="services-grid text-left">
-                <!-- Serviço 1 -->
                 <div class="service-card">
-                    <div>
-                        <h3>Sessão Dynavision Pulse</h3>
-                        <p>Um formato ágil e acessível para quem procura um impulso imediato. Ideal para trabalhar um desafio muito específico ou experimentar a nossa metodologia antes de se comprometer com um programa completo.</p>
-                    </div>
-                    <div>
-                        <div class="service-price">150 EUR <span>/ sessão</span></div>
-                        <a href="#contactos" class="btn btn-secondary" style="width: 100%; text-align: center;">Saber Mais</a>
-                    </div>
+                    <div><h3>Sessão Dynavision Pulse</h3><p>Um formato ágil para um impulso imediato num desafio específico.</p></div>
+                    <div class="service-price">150 EUR <span>/ sessão</span></div>
                 </div>
-
-                <!-- Serviço 2 -->
                 <div class="service-card featured">
                     <span class="badge-premium">Mais Procurado</span>
-                    <div>
-                        <h3>Programa Dynavision Premium</h3>
-                        <p>Desenhado para transformar padrões de comportamento profundamente enraizados, desconstruir crenças limitadoras e reconectá-lo com o seu núcleo essencial de clareza e ação.</p>
-                    </div>
-                    <div>
-                        <div class="service-price">Sob Consulta <span>/ personalizado</span></div>
-                        <a href="#contactos" class="btn btn-primary" style="width: 100%; text-align: center;">Solicitar Análise</a>
-                    </div>
-                </div>
-
-                <!-- Serviço 3 -->
-                <div class="service-card">
-                    <div>
-                        <h3>Programa Dynavision Duo</h3>
-                        <p>Específico para casais ou familiares que pretendem crescer juntos, alinhar visões de futuro, mitigar dinâmicas de conflito e desenvolver uma comunicação saudável e colaborativa.</p>
-                    </div>
-                    <div>
-                        <div class="service-price">Sob Consulta <span>/ duo</span></div>
-                        <a href="#contactos" class="btn btn-secondary" style="width: 100%; text-align: center;">Saber Mais</a>
-                    </div>
-                </div>
-
-                <!-- Serviço 4 -->
-                <div class="service-card">
-                    <div>
-                        <h3>Workshop Dynavision Focus Day</h3>
-                        <p>Imersão em grupo de um dia inteiro dedicada a estruturar e alinhar os seus objetivos anuais com ferramentas altamente práticas. Mínimo de 6 participantes.</p>
-                    </div>
-                    <div>
-                        <div class="service-price">Sob Consulta <span>/ por pessoa</span></div>
-                        <a href="#contactos" class="btn btn-secondary" style="width: 100%; text-align: center;">Ver Datas</a>
-                    </div>
+                    <div><h3>Programa Dynavision Premium</h3><p>Desenhado para transformar padrões de comportamento profundamente enraizados.</p></div>
+                    <div class="service-price">Sob Consulta</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="section-padding text-center">
+    <!-- SECÇÃO 2: TESTEMUNHOS (PARALLAX FIXO ALINHADO) -->
+    <section class="section-padding parallax-section text-center">
+        <div class="parallax-bg testimonials-bg"></div>
         <div class="container">
             <span class="section-tag">Testemunhos</span>
-            <h2 class="section-title">Resultados Reais e Mensuráveis</h2>
-            <p class="section-desc" style="margin-bottom: 36px;">A experiência e o impacto na vida de quem já confiou na Coach Inês Pinto Coelho.</p>
-            
+            <h2 class="section-title">Resultados Reais</h2>
             <div class="testimonial-grid text-left">
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"A Inês possui uma habilidade inata de ir rapidamente ao core da questão. Introduziu ferramentas surpreendentemente práticas que produzem resultados imediatos e mensuráveis. Saí enriquecido com uma toolbox de ferramentas."</p>
+                    <p class="testimonial-text">"A Inês possui uma habilidade inata de ir ao core da questão. Introduziu ferramentas práticas."</p>
                     <div class="testimonial-author">André R.</div>
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"Sempre calorosa e encorajadora, criando um ambiente seguro onde me senti à vontade para partilhar dificuldades. O seu acompanhamento fez toda a diferença e deu-me as ferramentas necessárias."</p>
+                    <p class="testimonial-text">"Ambiente seguro onde me senti à vontade para partilhar. Fez toda a diferença."</p>
                     <div class="testimonial-author">Maria B.</div>
                 </div>
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <p class="testimonial-text">"Estratégias eficazes que me permitiram reconhecer e alterar padrões, algo que nunca imaginei ser possível com tanta clareza. Foi o ponto de partida para um novo caminho."</p>
+                    <p class="testimonial-text">"Estratégias eficazes que me permitiram alterar padrões com clareza total."</p>
                     <div class="testimonial-author">Cristina S.</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contactos" class="section-padding contact-section text-center">
+    <!-- Contact Form -->
+    <section id="contactos" class="section-padding text-center">
         <div class="container">
             <span class="section-tag">Agendamento</span>
             <h2 class="section-title">Inicie a sua Transformação</h2>
-            <p class="section-desc">Preencha os dados abaixo. O clique irá redirecioná-lo instantaneamente para o WhatsApp com a mensagem estruturada.</p>
-            
             <div class="form-container text-left">
-                <form id="dynavisionForm" onsubmit="sendToWhatsApp(event)">
+                <form onsubmit="sendToWhatsApp(event)">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                        <div class="form-group">
-                            <label for="fname">Primeiro Nome</label>
-                            <input type="text" id="fname" class="form-control" placeholder="Ex: João" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lname">Último Nome</label>
-                            <input type="text" id="lname" class="form-control" placeholder="Ex: Ferreira" required>
-                        </div>
+                        <div class="form-group"><label>Primeiro Nome</label><input type="text" id="fname" class="form-control" required></div>
+                        <div class="form-group"><label>Último Nome</label><input type="text" id="lname" class="form-control" required></div>
                     </div>
-                    
+                    <div class="form-group"><label>E-mail</label><input type="email" id="email" class="form-control" required></div>
                     <div class="form-group">
-                        <label for="email">E-mail Profissional/Pessoal</label>
-                        <input type="email" id="email" class="form-control" placeholder="exemplo@gmail.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Qual é o seu foco de interesse principal?</label>
+                        <label>Foco de Interesse</label>
                         <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="interest" value="Conversa Inicial Gratuita" checked>
-                                <span>Agendar conversa inicial gratuita (15 min)</span>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="interest" value="Sessão Dynavision Pulse">
-                                <span>Sessão Dynavision Pulse</span>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="interest" value="Programa Dynavision Premium">
-                                <span>Programa Dynavision Premium</span>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="interest" value="Programa Dynavision Duo">
-                                <span>Programa Dynavision Duo</span>
-                            </label>
+                            <label class="radio-option"><input type="radio" name="interest" value="Conversa Inicial" checked> <span>Conversa Gratuita (15 min)</span></label>
+                            <label class="radio-option"><input type="radio" name="interest" value="Programa Premium"> <span>Programa Premium</span></label>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="message">Mensagem ou Contexto Adicional</label>
-                        <textarea id="message" class="form-control" rows="4" placeholder="Escreva aqui a sua mensagem..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px; padding: 18px; font-size: 15px; font-weight: 600;">
-                        Enviar mensagem via WhatsApp
-                    </button>
-                    <span class="cta-caption text-center">O clique abrirá a aplicação do WhatsApp com o seu texto preenchido automaticamente.</span>
+                    <div class="form-group"><label>Mensagem</label><textarea id="message" class="form-control" rows="4" required></textarea></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar via WhatsApp</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-grid text-left">
-                <div class="footer-col">
-                    <h4>Dynavision®</h4>
-                    <p style="line-height: 1.6;">Dedicados a pessoas que procuram clareza, propósito e transformação através de metodologias validadas de coaching e neurociência.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Navegação</h4>
-                    <ul>
-                        <li><a href="#">Início</a></li>
-                        <li><a href="#sobre">Sobre Nós</a></li>
-                        <li><a href="#pilares">A Nossa Abordagem</a></li>
-                        <li><a href="#servicos">Serviços & Programas</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Programas</h4>
-                    <ul>
-                        <li><a href="#servicos">Dynavision Pulse</a></li>
-                        <li><a href="#servicos">Dynavision Premium</a></li>
-                        <li><a href="#servicos">Dynavision Duo</a></li>
-                    </ul>
-                </div>
-            </div>
             <div class="footer-bottom">
                 <div>© 2026 Dynavision. Todos os direitos reservados.</div>
-                <div><a href="#" style="color: var(--text-muted); text-decoration: none;">Política de Proteção de Dados</a> | By Vera Pinto Coelho</div>
+                <div>By Vera Pinto Coelho</div>
             </div>
         </div>
     </footer>
 
-    <!-- Script JavaScript para WhatsApp -->
     <script>
+        // O efeito floating robusto usa o scroll do ecran suave para recalcular de forma sutil o parallax sem saltos bruscos
+        window.addEventListener("scroll", function() {
+            if (window.innerWidth > 768) {
+                const scrolled = window.pageYOffset;
+                // Ajuste milimétrico opcional para suavizar transições em ecrãs ultra-wide
+                document.querySelectorAll('.parallax-bg').forEach(bg => {
+                    bg.style.backgroundPosition = `center ${calcY}px`;
+                });
+            }
+        });
+
         function sendToWhatsApp(event) {
-            event.preventDefault(); 
-            
+            event.preventDefault();
             const firstName = document.getElementById('fname').value;
             const lastName = document.getElementById('lname').value;
             const email = document.getElementById('email').value;
             const interest = document.querySelector('input[name="interest"]:checked').value;
             const msgContent = document.getElementById('message').value;
             
-            const phoneNumber = "351916790183";
-            
-            const textMessage = `Olá Inês!%0A%0A` +
-                                `*Novo Contacto - Website Dynavision*%0A` +
-                                `• *Nome:* ${firstName} ${lastName}%0A` +
-                                `• *Email:* ${email}%0A` +
-                                `• *Interesse:* ${interest}%0A` +
-                                `• *Mensagem:* ${msgContent}`;
-            
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${textMessage}`;
-            
-            window.open(whatsappUrl, '_blank');
+            const textMessage = `Olá Inês!%0A%0A*Novo Contacto*%0A• Nome: ${firstName} ${lastName}%0A• Email: ${email}%0A• Interesse: ${interest}%0A• Mensagem: ${msgContent}`;
+            window.open(`https://wa.me/351916790183?text=${textMessage}`, '_blank');
         }
     </script>
 </body>
