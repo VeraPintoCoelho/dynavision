@@ -1,947 +1,898 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Para ti Benedita">
-<title>Para ti Benedita 💖</title>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-:root {
-  --bg: #FFF4FB;
-  --card: #FFFFFF;
-  --text: #2D2D2D;
-  --radius: 28px;
-  --pink: #FF6EBB;
-  --purple: #A855F7;
-  --sun: #FFD93D;
-  --green: #4CAF50;
-  --blue: #4488FF;
-  --coral: #FF6B6B;
-  --orange: #FF9F43;
-  --teal: #20B2AA;
-}
-body {
-  font-family: 'Nunito', 'Comic Sans MS', system-ui, sans-serif;
-  background: var(--bg);
-  min-height: 100vh; min-height: 100dvh;
-  overflow-x: hidden;
-  touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
-}
- 
-/* ── SCREENS ── */
-#home { display: flex; flex-direction: column; align-items: center; padding: 20px 16px 48px; min-height: 100dvh; }
-.game-screen { display: none; flex-direction: column; align-items: center; min-height: 100dvh; }
- 
-/* ── HOME ── */
-.home-header { text-align: center; margin-bottom: 24px; }
-.home-title {
-  font-size: clamp(1.9rem, 8vw, 2.8rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--pink), var(--purple));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  line-height: 1.15; margin-bottom: 4px;
-}
-.home-sub { font-size: 1rem; color: #AA88AA; font-weight: 700; }
-.games-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 12px; width: 100%; max-width: 420px;
-}
-.game-btn {
-  background: var(--card); border: none; border-radius: var(--radius);
-  padding: 20px 10px 16px;
-  display: flex; flex-direction: column; align-items: center; gap: 7px;
-  cursor: pointer; box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-  transition: transform 0.15s;
-}
-.game-btn:active { transform: scale(0.91); }
-.game-btn .emoji { font-size: 2.6rem; line-height: 1; }
-.game-btn .label { font-size: 0.9rem; font-weight: 900; color: var(--text); text-align: center; }
-.game-btn.c_mega { background: linear-gradient(145deg, #FFEBF4, #FFD6EA); border: 2px solid var(--pink); }
-.game-btn.c1  { background: linear-gradient(145deg,#FFF0F0,#FFE4E4); }
-.game-btn.c2  { background: linear-gradient(145deg,#F0F8FF,#E0F0FF); }
-.game-btn.c3  { background: linear-gradient(145deg,#F0FFF4,#DCF5E4); }
-.game-btn.c4  { background: linear-gradient(145deg,#FFF8E1,#FFF0C0); }
-.game-btn.c7  { background: linear-gradient(145deg,#E8F5E9,#C8E6C9); }
-.game-btn.c9  { background: linear-gradient(145deg,#E3F2FD,#BBDEFB); }
- 
-/* ── GAME HEADER ── */
-.game-header {
-  width: 100%; display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 18px; position: sticky; top: 0; z-index: 10;
-  background: rgba(255,244,251,0.95); backdrop-filter: blur(8px);
-}
-.back-btn {
-  background: var(--card); border: none; border-radius: 50%;
-  width: 50px; height: 50px; font-size: 1.4rem;
-  cursor: pointer; box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-  display: flex; align-items: center; justify-content: center;
-}
-.back-btn:active { transform: scale(0.88); }
-.score-badge {
-  background: var(--sun); border-radius: 50px;
-  padding: 7px 16px; font-weight: 900; font-size: 1rem;
-  color: #6B4000; box-shadow: 0 2px 8px rgba(255,180,0,0.3);
-}
-.game-title-display { font-size: clamp(1.1rem,4vw,1.4rem); font-weight: 900; color: var(--text); }
-.game-body {
-  flex: 1; width: 100%; display: flex; flex-direction: column;
-  align-items: center; padding: 14px 18px 40px; gap: 18px;
-}
-.question-label {
-  font-size: clamp(1.2rem,4.5vw,1.6rem); font-weight: 900;
-  color: var(--text); text-align: center;
-}
- 
-/* ── SHARED OPTION STYLES ── */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 380px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; width: 100%; max-width: 380px; }
-.opt-card {
-  background: white; border: 3px solid #EEE; border-radius: 20px;
-  padding: 14px 8px; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  font-size: 1rem; font-weight: 900; color: var(--text);
-  box-shadow: 0 3px 12px rgba(0,0,0,0.07); transition: transform 0.12s;
-}
-.opt-card .big { font-size: 2.4rem; }
-.opt-card:active { transform: scale(0.91); }
-.opt-card.correct { border-color: #00E676; background: #E8FFF0; }
-.opt-card.wrong   { border-color: #FF5252; background: #FFF0F0; animation: shake 0.4s; }
-.num-opt { background: white; border: 3px solid #EEE; border-radius: 18px; padding: 16px 6px;
-  font-size: 1.8rem; font-weight: 900; color: var(--text);
-  cursor: pointer; box-shadow: 0 3px 12px rgba(0,0,0,0.07); text-align: center;
-  transition: transform 0.12s; }
-.num-opt:active { transform: scale(0.91); }
-.num-opt.correct { border-color: #00E676; background: #E8FFF0; }
-.num-opt.wrong   { border-color: #FF5252; background: #FFF0F0; animation: shake 0.4s; }
- 
-/* ── COLORS ── */
-.color-target {
-  width: min(180px,52vw); height: min(180px,52vw);
-  border-radius: 50%; box-shadow: 0 8px 28px rgba(0,0,0,0.18);
-}
-.color-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 360px; }
-.color-opt { height: min(80px,20vw); border-radius: 18px; border: 4px solid white;
-  cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.13); transition: transform 0.12s; }
-.color-opt:active { transform: scale(0.9); }
-.color-opt.correct { animation: correctPop 0.5s; border-color:#00E676; }
-.color-opt.wrong   { animation: shake 0.4s; border-color:#FF5252; }
- 
-/* ── BALLOONS ── */
-.balloon-area { width:100%; max-width:420px; height:min(360px,58vw); position:relative; overflow:hidden; border-radius:20px; background:linear-gradient(180deg,#87CEEB,#E0F7FA); }
-.balloon { position:absolute; font-size:clamp(3rem,12vw,5rem); cursor:pointer; animation:riseUp linear forwards; user-select:none; filter:drop-shadow(0 3px 6px rgba(0,0,0,0.18)); }
-@keyframes riseUp { from{bottom:-70px;opacity:1} to{bottom:110%;opacity:0.5} }
-.balloon.pop { animation:popAnim 0.3s forwards !important; }
-@keyframes popAnim { 0%{transform:scale(1);opacity:1} 50%{transform:scale(1.9);opacity:0.4} 100%{transform:scale(0);opacity:0} }
- 
-/* ── EGG GAME ── */
-.egg-wrap { position:relative; display:flex; align-items:center; justify-content:center; width:min(220px,60vw); height:min(260px,68vw); cursor:pointer; }
-.egg-svg { width:100%; height:100%; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.2)); transition:transform 0.1s; }
-.egg-wrap:active .egg-svg { transform:scale(1.06); }
-.crack-layer { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
-.tap-hint { font-size:1rem; color:#999; font-weight:700; animation:pulse 1.2s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-.dino-reveal { font-size:clamp(5rem,25vw,8rem); animation:dinoIn 0.6s cubic-bezier(.34,1.56,.64,1); }
-@keyframes dinoIn { from{transform:scale(0) rotate(-20deg);opacity:0} to{transform:scale(1) rotate(0deg);opacity:1} }
-.dino-dance { animation:dance 0.5s ease-in-out infinite alternate; }
-@keyframes dance { from{transform:rotate(-10deg) scale(1)} to{transform:rotate(10deg) scale(1.08)} }
- 
-/* ── FARM ── */
-.farm-scene { width:100%; max-width:400px; background:linear-gradient(180deg,#87CEEB 0%,#87CEEB 55%,#7CB342 55%,#558B2F 100%); border-radius:20px; padding:16px; position:relative; min-height:180px; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:flex-end; padding-bottom:20px; }
-.farm-item { font-size:clamp(2.8rem,12vw,4.2rem); cursor:pointer; transition:transform 0.12s; user-select:none; filter:drop-shadow(0 3px 6px rgba(0,0,0,0.15)); }
-.farm-item:active { transform:scale(0.85); }
-.farm-item.collected { animation:collectAnim 0.4s forwards; pointer-events:none; }
-@keyframes collectAnim { 0%{transform:scale(1);opacity:1} 50%{transform:scale(1.4) translateY(-20px);opacity:0.7} 100%{transform:scale(0) translateY(-40px);opacity:0} }
-.basket-row { display:flex; align-items:center; gap:10px; font-size:1.8rem; font-weight:900; color:var(--text); }
- 
-/* ── FIRE TRUCK ── */
-.town-scene { width:100%; max-width:400px; background:linear-gradient(180deg,#87CEEB,#E3F2FD); border-radius:20px; padding:14px; min-height:200px; position:relative; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:center; }
-.fire-item { font-size:clamp(2.5rem,11vw,3.8rem); cursor:pointer; user-select:none; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.15)); transition:transform 0.12s; }
-.fire-item:active { transform:scale(0.85); }
-.fire-item.splashed { animation:splash 0.5s forwards; pointer-events:none; }
-@keyframes splash { 0%{transform:scale(1)} 40%{transform:scale(1.5);filter:hue-rotate(180deg)} 100%{transform:scale(0);opacity:0} }
- 
-/* ── DRAWING ══ */
-.drawing-canvas-wrap { width:100%; max-width:380px; aspect-ratio:1; background:white; border-radius:20px; border:3px solid #EEE; box-shadow:0 4px 16px rgba(0,0,0,0.1); overflow:hidden; position:relative; touch-action:none; cursor:crosshair; }
-#draw-canvas { width:100%; height:100%; }
-.color-strip { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; max-width:380px; }
-.color-swatch { width:44px; height:44px; border-radius:50%; border:3px solid white; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); transition:transform 0.12s; flex-shrink:0; }
-.color-swatch:active { transform:scale(0.88); }
-.color-swatch.selected { border-color:#333; transform:scale(1.15); }
-.tool-strip { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
-.tool-btn { background:white; border:2px solid #EEE; border-radius:14px; padding:10px 14px; font-size:1.4rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.08); transition:transform 0.12s; }
-.tool-btn:active { transform:scale(0.88); }
-.tool-btn.selected { border-color:#A855F7; background:#F5F0FF; }
-.stamp-strip { display:flex; gap:8px; overflow-x:auto; width:100%; max-width:380px; padding:4px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
-.stamp-strip::-webkit-scrollbar { display:none; }
-.stamp-btn { min-width:52px; height:52px; background:white; border:2px solid #EEE; border-radius:12px; font-size:1.6rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.stamp-btn:active { transform:scale(0.85); }
- 
-/* ── PET ══ */
-.pet-stage { width:100%; max-width:360px; min-height:min(200px,52vw); background:linear-gradient(180deg,#E8F5E9,#C8E6C9); border-radius:24px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border:3px solid #A5D6A7; }
-.pet-display { font-size:clamp(6rem,26vw,9rem); cursor:pointer; user-select:none; filter:drop-shadow(0 6px 14px rgba(0,0,0,0.15)); transition:transform 0.2s; }
-.pet-display:active { transform:scale(1.12); }
-.pet-happy { animation:petHappy 0.5s cubic-bezier(.34,1.56,.64,1); }
-@keyframes petHappy { 0%{transform:scale(1)} 50%{transform:scale(1.2) rotate(-8deg)} 100%{transform:scale(1) rotate(0)} }
-.needs-bar { width:100%; max-width:360px; display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.need-row { background:white; border-radius:14px; padding:10px 14px; display:flex; flex-direction:column; gap:6px; box-shadow:0 2px 8px rgba(0,0,0,0.07); }
-.need-label { font-size:0.85rem; font-weight:900; color:#555; display:flex; align-items:center; gap:5px; }
-.need-bar-bg { background:#EEE; border-radius:50px; height:12px; overflow:hidden; }
-.need-bar-fill { height:100%; border-radius:50px; transition:width 0.5s; }
-.pet-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:360px; }
-.pet-action-btn { background:white; border:2px solid #EEE; border-radius:18px; padding:14px 10px; display:flex; flex-direction:column; align-items:center; gap:6px; font-size:0.85rem; font-weight:900; color:#555; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.07); transition:transform 0.12s; }
-.pet-action-btn .pa-icon { font-size:2rem; }
-.pet-action-btn:active { transform:scale(0.91); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynavision® | Eleve-se com Coaching & Neurociência</title>
+    <!-- Google Fonts - Inter para o look moderno e limpo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FBFBFA; /* Off-white linho */
+            --card-bg: #FFFFFF;
+            --apple-gray-light: #F2F2EE; /* Cinza-oliva muito suave */
+            --text-dark: #1E2522; /* Carvão botânico */
+            --text-muted: #606863;
+            --accent-green-deep: #2E4A3F; /* Verde floresta fechado */
+            --accent-green-sage: #8F9E8B; /* Verde sálvia suave */
+            --accent-green-hover: #1F332B;
+            --border-color: #E1E3DE;
+            --max-width: 1100px;
+            --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
-/* ══ NEW REAL MEGA PUZZLE ADVENTURE STYLES ══ */
-.puzzle-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; width: 100%; max-width: 380px; }
-.puzzle-cat-btn { background: white; border: 2px solid #EEE; border-radius: 14px; padding: 8px 2px; display: flex; flex-direction: column; align-items: center; font-size: 0.72rem; font-weight: 800; color: var(--text); cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
-.puzzle-cat-btn.active { border-color: var(--pink); background: #FFF0F7; }
-.puzzle-cat-btn .cat-ico { font-size: 1.6rem; margin-bottom: 2px; }
-.puzzle-diff-row { display: flex; gap: 6px; width: 100%; max-width: 380px; justify-content: center; margin-top: 2px; }
-.puzzle-diff-btn { background: white; border: 2px solid #EEE; border-radius: 50px; padding: 6px 10px; font-size: 0.78rem; font-weight: 900; color: #666; cursor: pointer; }
-.puzzle-diff-btn.active { background: linear-gradient(135deg, var(--pink), var(--purple)); color: white; border-color: transparent; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-.puzzle-board-wrapper { position: relative; width: min(290px, 82vw); height: min(290px, 82vw); background: #FFF; border-radius: 20px; border: 4px dashed #FFD6EA; box-shadow: 0 4px 16px rgba(0,0,0,0.04); overflow: visible; margin: 6px auto; }
-.puzzle-bg-shadow { position: absolute; inset: 0; display: grid; opacity: 0.22; transition: opacity 0.5s ease; pointer-events: none; border-radius: 16px; overflow: hidden; }
-.puzzle-cell-target { border: 1px dashed rgba(0,0,0,0.08); display: block; position: relative; box-sizing: border-box; }
-.puzzle-cell-target.glow { background: rgba(0, 230, 118, 0.18); box-shadow: inset 0 0 10px rgba(0,230,118,0.4); }
+        html {
+            scroll-behavior: smooth;
+        }
 
-.puzzle-piece-draggable { position: absolute; cursor: grab; display: block; box-sizing: border-box; user-select: none; touch-action: none; z-index: 50; box-shadow: 0 4px 10px rgba(0,0,0,0.18); border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; background-repeat: no-repeat; }
-.puzzle-piece-draggable:active { cursor: grabbing; transform: scale(1.08); box-shadow: 0 8px 16px rgba(0,0,0,0.25); z-index: 100; }
-.puzzle-piece-draggable.snap-back { transition: top 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.2), left 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.2); }
-.puzzle-piece-draggable.placed { pointer-events: none; box-shadow: none !important; border: 0.5px solid rgba(0,0,0,0.05) !important; z-index: 10; border-radius: 0px; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            letter-spacing: -0.022em;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            display: block !important;
+        }
 
-.puzzle-tray-container { width: 100%; max-width: 380px; background: rgba(255,255,255,0.75); border-radius: 18px; padding: 10px; min-height: 105px; position: relative; border: 2px solid #F3E5F5; margin-top: 4px; }
-.puzzle-celebration-box { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-size: clamp(6rem, 25vw, 9rem); z-index: 80; pointer-events: none; background: rgba(255,255,255,0.85); border-radius: 16px; }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(143, 158, 139, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(143, 158, 139, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(143, 158, 139, 0); }
+        }
 
-.p-dance { animation: pDance 0.5s ease-in-out infinite alternate; }
-@keyframes pDance { from { transform: scale(0.95) rotate(-6deg); } to { transform: scale(1.05) rotate(6deg); } }
-.p-spin { animation: pSpin 1.4s linear infinite; }
-@keyframes pSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.p-bounce { animation: pBounce 0.45s ease-in-out infinite alternate; }
-@keyframes pBounce { from { transform: translateY(0); } to { transform: translateY(-20px); } }
+        /* Utility Classes */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-/* ── SHAPES/NUMBERS ADAPTATIONS ── */
-.shape-display { font-size: 5rem; text-align: center; }
-.shape-opt { background: white; border: 3px solid #EEE; border-radius: 20px; padding: 10px; display: flex; flex-direction: column; align-items: center; font-weight: 800; cursor: pointer; }
-.shape-opt svg { width: 50px; height: 50px; }
-.shape-opt.correct { border-color: #00E676; background: #E8FFF0; }
-.shape-opt.wrong { border-color: #FF5252; background: #FFF0F0; animation: shake 0.4s; }
-.dots-display { display: flex; gap: 10px; justify-content: center; padding: 10px; min-height: 50px; }
-.dot { width: 30px; height: 30px; background: #FF1744; border-radius: 50%; }
-.unicorn-track { width: 100%; max-width: 360px; }
-.rainbow-row { display: flex; flex-direction: column; gap: 4px; }
-.rainbow-band { height: 20px; border: none; border-radius: 4px; cursor: pointer; }
-.rainbow-band.correct { animation: correctPop 0.4s; }
-.rainbow-band.wrong { animation: shake 0.4s; }
-.unicorn-row { display: flex; justify-content: space-between; align-items: center; font-size: 2rem; margin-top: 10px; }
-.cloud-target { background: white; padding: 6px 12px; border-radius: 20px; font-size: 1rem; font-weight: 800; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        /* CORREÇÃO: Menos espaço entre as secções (reduzido de 120px para 60px) */
+        .section-padding {
+            padding: 60px 0;
+        }
 
-/* ── FEEDBACK ── */
-#feedback-overlay {
-  position:fixed; inset:0; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; z-index:100;
-  pointer-events:none; opacity:0; transition:opacity 0.2s;
-}
-#feedback-overlay.show { opacity:1; pointer-events:all; }
-#feedback-overlay .fb-emoji { font-size:clamp(5rem,26vw,8rem); animation:popIn 0.4s cubic-bezier(.34,1.56,.64,1); }
-#feedback-overlay .fb-text { font-size:clamp(1.7rem,6vw,2.3rem); font-weight:900; color:white; text-shadow:0 3px 10px rgba(0,0,0,0.3); margin-top:10px; animation:popIn 0.4s 0.05s cubic-bezier(.34,1.56,.64,1) both; }
-#feedback-overlay.correct-bg { background:radial-gradient(circle,rgba(0,200,100,0.92),rgba(0,150,70,0.92)); }
-#feedback-overlay.wrong-bg   { background:radial-gradient(circle,rgba(255,80,80,0.88),rgba(200,30,30,0.88)); }
- 
-/* ── ANIMATIONS ── */
-@keyframes correctPop { 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
-@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
-@keyframes popIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
-.star-particle { position:fixed; pointer-events:none; font-size:2rem; z-index:200; animation:starFall 1s ease-in forwards; }
-@keyframes starFall { 0%{transform:translateY(0) rotate(0deg) scale(1);opacity:1} 100%{transform:translateY(60px) rotate(360deg) scale(0);opacity:0} }
-</style>
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+
+        /* Buttons executivos arredondados */
+        .btn {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 14px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-green-deep);
+            color: #FBFBFA;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-green-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46, 74, 63, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--apple-gray-light);
+            border-color: var(--accent-green-sage);
+            transform: translateY(-1px);
+        }
+
+        .cta-caption {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 12px;
+            display: block;
+        }
+
+        /* Header / Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(251, 251, 250, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: -0.03em;
+            color: var(--accent-green-deep);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 13px;
+            margin-left: 28px;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            opacity: 1;
+            color: var(--accent-green-deep);
+        }
+
+        .nav-btn {
+            background-color: var(--accent-green-deep);
+            color: #FBFBFA !important;
+            padding: 8px 18px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 1;
+        }
+        .nav-btn:hover {
+            background-color: var(--accent-green-hover);
+        }
+
+        /* Hero Section - Compactado */
+        .hero {
+            padding-top: 130px; /* Reduzido o topo para colar mais ao header fixo */
+            padding-bottom: 60px;
+            background-color: var(--apple-gray-light);
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--accent-green-deep);
+        }
+
+        .hero p.subtitle {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text-muted);
+            max-width: 740px;
+            margin: 0 auto 32px auto;
+            letter-spacing: -0.015em;
+        }
+
+        /* Agitation / Questions Section - Margens mais curtas */
+        .status-check {
+            background-color: var(--card-bg);
+            border-radius: 32px;
+            padding: 40px 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-color);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 28px;
+        }
+
+        .status-card {
+            background: var(--apple-gray-light);
+            padding: 24px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--text-dark);
+            border: 1px solid transparent;
+            transition: var(--transition);
+        }
+
+        .status-card:hover {
+            background: var(--card-bg);
+            border-color: var(--accent-green-sage);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(143, 158, 139, 0.1);
+        }
+
+        /* Section Typography */
+        .section-tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-green-deep);
+            background: rgba(143, 158, 139, 0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .section-desc {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto 40px auto; /* Reduzido de 60px para 40px */
+        }
+
+        /* Pillars Section */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .pillar-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px;
+            transition: var(--transition);
+        }
+
+        .pillar-item:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            border-color: var(--accent-green-deep);
+            transform: scale(1.01);
+        }
+
+        .pillar-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent-green-deep);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pillar-item h3::before {
+            content: '';
+            width: 5px;
+            height: 20px;
+            background-color: var(--accent-green-sage);
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .pillar-item p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Quote Separator - Mais integrado */
+        .quote-box {
+            background-color: var(--apple-gray-light);
+            padding: 50px 40px;
+            font-size: 22px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--text-dark);
+            border-radius: 32px;
+            margin: 40px 0;
+            border-left: 4px solid var(--accent-green-deep);
+        }
+        .quote-author {
+            font-size: 13px;
+            font-style: normal;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-top: 12px;
+            display: block;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 48px rgba(46, 74, 63, 0.06);
+            border-color: var(--accent-green-sage);
+        }
+
+        .service-card.featured {
+            border: 2px solid var(--accent-green-deep);
+            animation: pulseGlow 3s infinite;
+        }
+
+        .badge-premium {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            background-color: var(--accent-green-deep);
+            color: #FBFBFA;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .service-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent-green-deep);
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+            flex-grow: 1;
+        }
+
+        .service-price {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            color: var(--text-dark);
+        }
+        .service-price span {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--apple-gray-light);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.04);
+            border-color: var(--accent-green-sage);
+        }
+
+        .stars {
+            color: var(--accent-green-sage);
+            margin-bottom: 12px;
+            font-size: 15px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--accent-green-deep);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: var(--bg-color);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 36px;
+            border-radius: 32px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            background-color: var(--apple-gray-light);
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            background-color: var(--card-bg);
+            border-color: var(--accent-green-deep);
+            box-shadow: 0 0 0 4px rgba(46, 74, 63, 0.15);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            background: var(--apple-gray-light);
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .radio-option:hover {
+            background-color: var(--card-bg);
+            border-color: var(--accent-green-sage);
+        }
+
+        .radio-option input {
+            margin-right: 12px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent-green-deep);
+        }
+
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+            padding: 14px 24px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 999;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(46, 74, 63, 0.15);
+            border-color: var(--accent-green-deep);
+        }
+
+        .whatsapp-icon-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--apple-gray-light);
+            padding: 60px 0 40px 0;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+
+        .footer-col h4 {
+            color: var(--text-dark);
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        .footer-col ul li {
+            list-style: none;
+            margin-bottom: 8px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-green-deep);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 38px; }
+            .hero p.subtitle { font-size: 18px; }
+            .status-grid, .pillars-grid, .services-grid, .testimonial-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-padding { padding: 40px 0; }
+            .section-title { font-size: 30px; }
+            .form-container { padding: 28px 20px; }
+            nav a:not(.nav-btn) { display: none; }
+            .whatsapp-float { bottom: 20px; right: 20px; padding: 12px 18px; }
+        }
+    </style>
 </head>
 <body>
- 
-<script>
-const CONFETTI_EMOJIS = ['✨','🌟','💖','🎉','🎨','🦄','🌈','🌸'];
-let score = 0;
-const acttx = new (window.AudioContext || window.webkitAudioContext)();
-function playTone(f,type,d,vol=0.12) {
-  try {
-    let o = acttx.createOscillator(); let g = acttx.createGain();
-    o.type=type; o.frequency.setValueAtTime(f,acttx.currentTime);
-    g.gain.setValueAtTime(vol,acttx.currentTime); g.gain.exponentialRampToValueAtTime(0.00001,acttx.currentTime+d);
-    o.connect(g); g.connect(acttx.destination); o.start(); o.stop(acttx.currentTime+d);
-  } catch(e){}
-}
-function playTap() { playTone(550,'sine',0.08,0.15); }
-function playSuccess() {
-  setTimeout(()=>playTone(523.25,'triangle',0.15,0.15),0);
-  setTimeout(()=>playTone(659.25,'triangle',0.15,0.15),100);
-  setTimeout(()=>playTone(783.99,'triangle',0.18,0.15),200);
-  setTimeout(()=>playTone(1046.50,'triangle',0.3,0.18),300);
-}
-function playPop() { playTone(900,'sine',0.05,0.2); }
-function playSplash() { playTone(180,'triangle',0.25,0.25); }
-function playScoreUp() { playTone(880,'sine',0.12,0.15); }
- 
-function spawnStars(customX, customY) {
-  for(let i=0;i<10;i++){
-    const s = document.createElement('div');
-    s.className='star-particle';
-    s.textContent = CONFETTI_EMOJIS[Math.floor(Math.random()*CONFETTI_EMOJIS.length)];
-    s.style.left = (customX || (Math.random()*80+10)+'%');
-    s.style.top = (customY || (Math.random()*60+15)+'%');
-    s.style.fontSize = (Math.random()*1.5+1.2)+'rem';
-    document.body.append(s);
-    setTimeout(()=>s.remove(),1000);
-  }
-}
-function incScore(v=1){ score+=v; document.querySelectorAll('.score-badge').forEach(b=>b.textContent='⭐ '+score); playScoreUp(); }
-function mk(tag,cls,txt=''){ const el=document.createElement(tag); if(cls)el.className=cls; if(txt)el.textContent=txt; return el; }
-</script>
- 
-<div id="home">
-  <div class="home-header">
-    <h1 class="home-title">Para ti Benedita 💖</h1>
-    <p class="home-sub">Escolhe um jogo e diverte-te!</p>
-  </div>
-  
-  <div class="games-grid">
-    <button class="game-btn c_mega" onclick="playTap(); openGame('mega_puzzle')">
-      <span class="emoji">🧩</span>
-      <span class="label" style="color:var(--pink);">MEGA PUZZLE</span>
-    </button>
-    <button class="game-btn c1" onclick="playTap(); openGame('colors')">
-      <span class="emoji">🎨</span>
-      <span class="label">Cores Mágicas</span>
-    </button>
-    <button class="game-btn c2" onclick="playTap(); openGame('balloons')">
-      <span class="emoji">🎈</span>
-      <span class="label">Rebentar Balões</span>
-    </button>
-    <button class="game-btn c3" onclick="playTap(); openGame('eggs')">
-      <span class="emoji">🦖</span>
-      <span class="label">Ovos Surpresa</span>
-    </button>
-    <button class="game-btn c4" onclick="playTap(); openGame('farm')">
-      <span class="emoji">🚜</span>
-      <span class="label">A Quinta</span>
-    </button>
-    <button class="game-btn c7" onclick="playTap(); openGame('fire')">
-      <span class="emoji">🚒</span>
-      <span class="label">Carro de Bombeiros</span>
-    </button>
-    <button class="game-btn c9" onclick="playTap(); openGame('drawing')">
-      <span class="emoji">📝</span>
-      <span class="label">Quadro de Desenho</span>
-    </button>
-    <button class="game-btn c4" onclick="playTap(); openGame('shapes')">
-      <span class="emoji">📐</span>
-      <span class="label">Formas Geométricas</span>
-    </button>
-    <button class="game-btn c2" onclick="playTap(); openGame('numbers')">
-      <span class="emoji">🔢</span>
-      <span class="label">Contar Números</span>
-    </button>
-    <button class="game-btn id_pet c1" onclick="playTap(); openGame('pet')">
-      <span class="emoji">🐱</span>
-      <span class="label">Animal de Estimação</span>
-    </button>
-    <button class="game-btn c3" onclick="playTap(); openGame('unicorn')">
-      <span class="emoji">🌈</span>
-      <span class="label">Caminho do Unicórnio</span>
-    </button>
-  </div>
-</div>
- 
-<div id="game-container" class="game-screen">
-  <div class="game-header">
-    <button class="back-btn" onclick="playTap(); goHome()">🏠</button>
-    <span class="game-title-display" id="game-title">Jogo</span>
-    <span class="score-badge">⭐ 0</span>
-  </div>
-  <div class="game-body" id="game-body-content"></div>
-</div>
- 
-<div id="feedback-overlay">
-  <div class="fb-emoji" id="fb-emoji">🤩</div>
-  <div class="fb-text" id="fb-text">Incrível!</div>
-</div>
- 
-<script>
-let curGameId = '';
-function openGame(id) {
-  curGameId = id;
-  document.getElementById('home').style.display = 'none';
-  const gc = document.getElementById('game-container');
-  gc.style.display = 'flex';
-  renderGame(id);
-}
-function goHome() {
-  if (curGameId === 'drawing' && window.stopDrawingMode) window.stopDrawingMode();
-  document.getElementById('game-container').style.display = 'none';
-  document.getElementById('home').style.display = 'flex';
-  curGameId = '';
-}
-function triggerFeedback(isCorrect, text) {
-  const overlay = document.getElementById('feedback-overlay');
-  const e = document.getElementById('fb-emoji');
-  const t = document.getElementById('fb-text');
-  overlay.className = isCorrect ? 'correct-bg show' : 'wrong-bg show';
-  
-  if(isCorrect) {
-    const rights = ['✨ EXCELENTE! ✨','🎉 MUITO BEM! 🎉','🤩 INCRÍVEL! 🤩','🥰 LINDO! 🥰','🥳 ADORÁVEL! 🥳'];
-    const emojis = ['🤩','🥳','🥰','🍭','🦄','🦕','🦁','🎈'];
-    t.textContent = text || rights[Math.floor(Math.random()*rights.length)];
-    e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-    playSuccess(); spawnStars();
-  } else {
-    t.textContent = "Vamos tentar de novo! 🌟";
-    e.textContent = "🙃";
-    playTone(220,'sawtooth',0.3,0.1);
-  }
-  setTimeout(()=>overlay.className='', 1400);
-}
- 
-function renderGame(id) {
-  const title = document.getElementById('game-title');
-  const body = document.getElementById('game-body-content');
-  body.innerHTML = '';
-  
-  if (id === 'mega_puzzle') {
-    title.textContent = "Mega Puzzle Adventure 🧩";
-    initMegaPuzzle(body);
-  }
-  else if(id==='colors') {
-    title.textContent = "Cores Mágicas 🎨";
-    const colors = [
-      {n:'Vermelho',c:'#FF1744',e:'🍎'}, {n:'Azul',c:'#2979FF',e:'🐳'},
-      {n:'Verde',c:'#00E676',e:'🐸'}, {n:'Amarelo',c:'#FFEA00',e:'🌟'},
-      {n:'Rosa',c:'#F50057',e:'🌸'}, {n:'Laranja',c:'#FF9100',e:'🍊'},
-      {n:'Roxo',c:'#D500F9',e:'🍇'}, {n:'Castanho',c:'#8D6E63',e:'🐻'}
-    ];
-    let target = colors[Math.floor(Math.random()*colors.length)];
-    body.append(mk('div','question-label','Onde está a cor '+target.n+'? '+target.e));
-    const tBox = mk('div','color-target'); tBox.style.backgroundColor = target.c;
-    body.append(tBox);
-    const opts = mk('div','color-options');
-    let pool = [target]; while(pool.length<4){ let r=colors[Math.floor(Math.random()*colors.length)]; if(!pool.includes(r))pool.push(r); }
-    pool.sort(()=>Math.random()-0.5);
-    pool.forEach(o=>{
-      const btn = mk('div','color-opt'); btn.style.backgroundColor = o.c;
-      btn.onclick=()=>{
-        if(o===target){ btn.classList.add('correct'); incScore(); triggerFeedback(true); setTimeout(()=>renderGame('colors'),1500); }
-        else { btn.classList.add('wrong'); triggerFeedback(false); setTimeout(()=>btn.classList.remove('wrong'),500); }
-      };
-      opts.append(btn);
-    });
-    body.append(opts);
-  }
-  else if(id==='balloons') {
-    title.textContent = "Rebentar Balões 🎈";
-    body.append(mk('div','question-label','Toca nos balões para os rebentar!'));
-    const area = mk('div','balloon-area'); body.append(area);
-    let colors = ['#FF1744','#2979FF','#00E676','#FFEA00','#D500F9','#FF9100'];
-    let emojis = ['🎈','🎈','🎈','🎈','✨','🌟'];
-    function spawn() {
-      if(curGameId!=='balloons')return;
-      const b = mk('div','balloon',emojis[Math.floor(Math.random()*emojis.length)]);
-      b.style.color = colors[Math.floor(Math.random()*colors.length)];
-      b.style.left = (Math.random()*82+4)+'%';
-      let speed = Math.random()*2500+2500; b.style.animationDuration = speed+'ms';
-      b.onclick=(e)=>{
-        e.stopPropagation(); b.classList.add('pop'); playPop(); incScore();
-        spawnStars(b.style.left, b.getBoundingClientRect().top+'px');
-        setTimeout(()=>b.remove(),300);
-      };
-      area.append(b); setTimeout(()=>b.remove(),speed); setTimeout(spawn, Math.random()*600+400);
-    }
-    spawn(); spawn();
-  }
-  else if(id==='eggs') {
-    title.textContent = "Ovos Surpresa 🦖";
-    body.append(mk('div','question-label','Toca no ovo até partir!'));
-    let taps = 0; let req = 4;
-    const wrap = mk('div','egg-wrap');
-    wrap.innerHTML = `<svg class="egg-svg" viewBox="0 0 100 130"><path d="M50,5 C15,50 5,90 5,110 A45,20 0 0,0 95,110 C95,90 85,50 50,5 Z" fill="#FFF9C4" stroke="#FFD54F" stroke-width="4"/></svg><svg class="crack-layer" viewBox="0 0 100 130" id="egg-cracks"></svg>`;
-    const hint = mk('div','tap-hint','Toca no Ovo! 👋'); body.append(wrap, hint);
-    let dinos = ['🦖','🦕','👶','🦄','🦁','🐱','🐶','🦊','🐰','🐼'];
-    let chosen = dinos[Math.floor(Math.random()*dinos.length)];
-    wrap.onclick = () => {
-      taps++; playTone(300+taps*80,'sine',0.06,0.15);
-      wrap.style.transform = 'scale(0.95)'; setTimeout(()=>wrap.style.transform='',70);
-      const c = document.getElementById('egg-cracks');
-      if(taps===1) c.innerHTML='<path d="M50,40 L45,60 L55,75" stroke="#BCAAA4" stroke-width="3" fill="none"/>';
-      if(taps===2) c.innerHTML+='<path d="M45,60 L25,65 M55,75 L75,70" stroke="#BCAAA4" stroke-width="3" fill="none"/>';
-      if(taps===3) c.innerHTML+='<path d="M50,5 L50,40 M50,110 L50,130" stroke="#BCAAA4" stroke-width="3" fill="none"/>';
-      if(taps>=req) {
-        hint.remove(); incScore(5); spawnStars(); playSuccess();
-        body.innerHTML = '';
-        const r = mk('div','dino-reveal dino-dance', chosen);
-        const l = mk('div','question-label','Uau! Descobriste um amigo!');
-        const b = document.createElement('button'); b.style.cssText='background:linear-gradient(135deg,var(--pink),var(--purple));border:none;border-radius:50px;padding:12px 28px;font-size:1rem;font-weight:900;color:white;cursor:pointer;margin-top:10px;'; b.textContent='🥚 Outro Ovo!'; b.onclick=()=>renderGame('eggs');
-        body.append(r,l,b);
-      }
-    };
-  }
-  else if(id==='farm') {
-    title.textContent = "A Quinta 🚜";
-    let animals = [
-      {e:'🐥', s:600, n:'Pinto'}, {e:'🐷', s:300, n:'Porco'},
-      {e:'🐮', s:200, n:'Vaca'}, {e:'🐑', s:400, n:'Ovelha'},
-      {e:'🐴', s:250, n:'Cavalo'}, {e:'🐔', s:500, n:'Galinha'}
-    ];
-    let target = animals[Math.floor(Math.random()*animals.length)];
-    body.append(mk('div','question-label','Ajuda a recolher o/a '+target.n+'! '+target.e));
-    const scene = mk('div','farm-scene'); body.append(scene);
-    let pool = [target]; while(pool.length<5){ let r=animals[Math.floor(Math.random()*animals.length)]; pool.push(r); }
-    pool.sort(()=>Math.random()-0.5);
-    pool.forEach(a=>{
-      const item = mk('div','farm-item',a.e);
-      item.onclick=()=>{
-        if(a===target){ item.classList.add('collected'); playTone(a.s,'sine',0.2,0.2); incScore(); triggerFeedback(true); setTimeout(()=>renderGame('farm'),1400); }
-        else { item.style.animation='shake 0.4s'; playTone(120,'sawtooth',0.15,0.1); setTimeout(()=>item.style.animation='',400); }
-      };
-      scene.append(item);
-    });
-    body.append(mk('div','basket-row','🧺 Leva para a Cesta!'));
-  }
-  else if(id==='fire') {
-    title.textContent = "Carro de Bombeiros 🚒";
-    body.append(mk('div','question-label','Apaga os fogos com água! 💦'));
-    const scene = mk('div','town-scene'); body.append(scene);
-    let count = 0;
-    for(let i=0;i<4;i++){
-      const f = mk('div','fire-item','🔥');
-      f.onclick=()=>{
-        if(f.textContent==='🔥'){
-          f.classList.add('splashed'); playSplash(); spawnStars(); f.textContent='💦'; count++;
-          if(count===4){ incScore(4); triggerFeedback(true); setTimeout(()=>renderGame('fire'),1500); }
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/351916790183?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Coaching%20Dynavision." class="whatsapp-float" target="_blank">
+        <span class="whatsapp-icon-dot"></span>
+        <span>Mensagem direta</span>
+    </a>
+
+    <!-- Header / Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Dynavision®</a>
+            <nav>
+                <a href="#sobre">Sobre</a>
+                <a href="#pilares">Abordagem</a>
+                <a href="#servicos">Programas</a>
+                <a href="#contactos" class="nav-btn">Marcar Agora</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero text-center">
+        <div class="container">
+            <span class="section-tag">Coaching & Neurociência</span>
+            <h1>Eleve-se com Coaching Dynavision®</h1>
+            <p class="subtitle">Reconheça padrões inconscientes, crie uma visão clara e avance com a confiança necessária para alcançar os seus verdadeiros objetivos.</p>
+            <div>
+                <a href="https://wa.me/351916790183?text=Ol%C3%A1%20In%C3%AAs%21%20Gostaria%20de%20agendar%20a%20minha%20Conversa%20Inicial%20Gratuita%20de%2015%20minutos." class="btn btn-primary" target="_blank">Agendar Conversa Inicial Gratuita</a>
+                <span class="cta-caption">O clique abrirá instantaneamente a aplicação do WhatsApp.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agitation Section -->
+    <section class="container text-center" style="padding-top: 40px; padding-bottom: 40px;">
+        <div class="status-check">
+            <h3 style="font-size: 22px; font-weight: 600; color: var(--accent-green-deep);">Identifica-se com algum destes cenários?</h3>
+            <div class="status-grid">
+                <div class="status-card">"Sinto que sei exatamente o que quero, mas não sei por onde começar."</div>
+                <div class="status-card">"Estou a viver em piloto automático, sem rumo definido."</div>
+                <div class="status-card">"Preciso que a minha vida ganhe uma direção clara e entusiasmo real."</div>
+            </div>
+            <p style="margin-top: 28px; color: var(--text-muted); font-size: 16px; font-weight: 500;">Se quer iniciar um novo ciclo, a sua jornada de transformação começa aqui. Vamos caminhar lado a lado.</p>
+        </div>
+    </section>
+
+    <!-- O que Fazemos / Filosofia -->
+    <section id="sobre" class="section-padding text-center">
+        <div class="container">
+            <span class="section-tag">A nossa Abordagem</span>
+            <h2 class="section-title">Transformação com Base Científica</h2>
+            <p class="section-desc">Combinamos a metodologia de coaching com princípios práticos da neurociência e psicologia para promover mudanças profundas, sustentáveis e de longo prazo.</p>
+            
+            <div class="pillars-grid text-left" id="pilares">
+                <div class="pillar-item">
+                    <h3>Visão Interior</h3>
+                    <p>Aprofundamos o autoconhecimento para identificar forças, valores e o que realmente importa. Uma visão clara é o pilar estrutural.</p>
+                </div>
+                <div class="pillar-item">
+                    <h3>Propósito Definido</h3>
+                    <p>Exploramos e moldamos o seu propósito, oferecendo o suporte para que alcance as suas metas de forma alinhada com o que valoriza.</p>
+                </div>
+                <div class="pillar-item">
+                    <h3>A Mente em Ação</h3>
+                    <p>Compreendemos o funcionamento do cérebro para colocá-lo ao serviço dos seus objetivos, transformando barreiras invisíveis em conquistas.</p>
+                </div>
+                <div class="pillar-item">
+                    <h3>Parceria Transformadora</h3>
+                    <p>Suporte personalizado e altamente focado em cada fase do processo para desenvolver resiliência e manter o entusiasmo constante.</p>
+                </div>
+            </div>
+
+            <div class="quote-box">
+                “The view you adopt for yourself profoundly affects the way you lead your life.”
+                <span class="quote-author">— Carol S. Dweck, Mindset</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services / Programs Section -->
+    <section id="servicos" class="section-padding text-center" style="background-color: var(--apple-gray-light);">
+        <div class="container">
+            <span class="section-tag">Programas</span>
+            <h2 class="section-title">Encontre o formato ideal para si</h2>
+            <p class="section-desc">Soluções estruturadas e flexíveis para objetivos individuais, em casal ou em dinâmicas de grupo.</p>
+            
+            <div class="services-grid text-left">
+                <!-- Serviço 1 -->
+                <div class="service-card">
+                    <div>
+                        <h3>Sessão Dynavision Pulse</h3>
+                        <p>Um formato ágil e acessível para quem procura um impulso imediato. Ideal para trabalhar um desafio muito específico ou experimentar a nossa metodologia antes de se comprometer com um programa completo.</p>
+                    </div>
+                    <div>
+                        <div class="service-price">150 EUR <span>/ sessão</span></div>
+                        <a href="#contactos" class="btn btn-secondary" style="width: 100%; text-align: center;">Saber Mais</a>
+                    </div>
+                </div>
+
+                <!-- Serviço 2 -->
+                <div class="service-card featured">
+                    <span class="badge-premium">Mais Procurado</span>
+                    <div>
+                        <h3>Programa Dynavision Premium</h3>
+                        <p>Desenhado para transformar padrões de comportamento profundamente enraizados, desconstruir crenças limitadoras e reconectá-lo com o seu núcleo essencial de clareza e ação.</p>
+                    </div>
+                    <div>
+                        <div class="service-price">Sob Consulta <span>/ personalizado</span></div>
+                        <a href="#contactos" class="btn btn-primary" style="width: 100%; text-align: center;">Solicitar Análise</a>
+                    </div>
+                </div>
+
+                <!-- Serviço 3 -->
+                <div class="service-card">
+                    <div>
+                        <h3>Programa Dynavision Duo</h3>
+                        <p>Específico para casais ou familiares que pretendem crescer juntos, alinhar visões de futuro, mitigar dinâmicas de conflito e desenvolver uma comunicação saudável e colaborativa.</p>
+                    </div>
+                    <div>
+                        <div class="service-price">Sob Consulta <span>/ duo</span></div>
+                        <a href="#contactos" class="btn btn-secondary" style="width: 100%; text-align: center;">Saber Mais</a>
+                    </div>
+                </div>
+
+                <!-- Serviço 4 -->
+                <div class="service-card">
+                    <div>
+                        <h3>Workshop Dynavision Focus Day</h3>
+                        <p>Imersão em grupo de um dia inteiro dedicada a estruturar e alinhar os seus objetivos anuais com ferramentas altamente práticas. Mínimo de 6 participantes.</p>
+                    </div>
+                    <div>
+                        <div class="service-price">Sob Consulta <span>/ por pessoa</span></div>
+                        <a href="#contactos" class="btn btn-secondary" style="width: 100%; text-align: center;">Ver Datas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-padding text-center">
+        <div class="container">
+            <span class="section-tag">Testemunhos</span>
+            <h2 class="section-title">Resultados Reais e Mensuráveis</h2>
+            <p class="section-desc" style="margin-bottom: 36px;">A experiência e o impacto na vida de quem já confiou na Coach Inês Pinto Coelho.</p>
+            
+            <div class="testimonial-grid text-left">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"A Inês possui uma habilidade inata de ir rapidamente ao core da questão. Introduziu ferramentas surpreendentemente práticas que produzem resultados imediatos e mensuráveis. Saí enriquecido com uma toolbox de ferramentas."</p>
+                    <div class="testimonial-author">André R.</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Sempre calorosa e encorajadora, criando um ambiente seguro onde me senti à vontade para partilhar dificuldades. O seu acompanhamento fez toda a diferença e deu-me as ferramentas necessárias."</p>
+                    <div class="testimonial-author">Maria B.</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Estratégias eficazes que me permitiram reconhecer e alterar padrões, algo que nunca imaginei ser possível com tanta clareza. Foi o ponto de partida para um novo caminho."</p>
+                    <div class="testimonial-author">Cristina S.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contactos" class="section-padding contact-section text-center">
+        <div class="container">
+            <span class="section-tag">Agendamento</span>
+            <h2 class="section-title">Inicie a sua Transformação</h2>
+            <p class="section-desc">Preencha os dados abaixo. O clique irá redirecioná-lo instantaneamente para o WhatsApp com a mensagem estruturada.</p>
+            
+            <div class="form-container text-left">
+                <form id="dynavisionForm" onsubmit="sendToWhatsApp(event)">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="form-group">
+                            <label for="fname">Primeiro Nome</label>
+                            <input type="text" id="fname" class="form-control" placeholder="Ex: João" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Último Nome</label>
+                            <input type="text" id="lname" class="form-control" placeholder="Ex: Ferreira" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail Profissional/Pessoal</label>
+                        <input type="email" id="email" class="form-control" placeholder="exemplo@gmail.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Qual é o seu foco de interesse principal?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="interest" value="Conversa Inicial Gratuita" checked>
+                                <span>Agendar conversa inicial gratuita (15 min)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="interest" value="Sessão Dynavision Pulse">
+                                <span>Sessão Dynavision Pulse</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="interest" value="Programa Dynavision Premium">
+                                <span>Programa Dynavision Premium</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="interest" value="Programa Dynavision Duo">
+                                <span>Programa Dynavision Duo</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Mensagem ou Contexto Adicional</label>
+                        <textarea id="message" class="form-control" rows="4" placeholder="Escreva aqui a sua mensagem..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px; padding: 18px; font-size: 15px; font-weight: 600;">
+                        Enviar mensagem via WhatsApp
+                    </button>
+                    <span class="cta-caption text-center">O clique abrirá a aplicação do WhatsApp com o seu texto preenchido automaticamente.</span>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid text-left">
+                <div class="footer-col">
+                    <h4>Dynavision®</h4>
+                    <p style="line-height: 1.6;">Dedicados a pessoas que procuram clareza, propósito e transformação através de metodologias validadas de coaching e neurociência.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="#">Início</a></li>
+                        <li><a href="#sobre">Sobre Nós</a></li>
+                        <li><a href="#pilares">A Nossa Abordagem</a></li>
+                        <li><a href="#servicos">Serviços & Programas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Programas</h4>
+                    <ul>
+                        <li><a href="#servicos">Dynavision Pulse</a></li>
+                        <li><a href="#servicos">Dynavision Premium</a></li>
+                        <li><a href="#servicos">Dynavision Duo</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© 2026 Dynavision. Todos os direitos reservados.</div>
+                <div><a href="#" style="color: var(--text-muted); text-decoration: none;">Política de Proteção de Dados</a> | By Vera Pinto Coelho</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script JavaScript para WhatsApp -->
+    <script>
+        function sendToWhatsApp(event) {
+            event.preventDefault(); 
+            
+            const firstName = document.getElementById('fname').value;
+            const lastName = document.getElementById('lname').value;
+            const email = document.getElementById('email').value;
+            const interest = document.querySelector('input[name="interest"]:checked').value;
+            const msgContent = document.getElementById('message').value;
+            
+            const phoneNumber = "351916790183";
+            
+            const textMessage = `Olá Inês!%0A%0A` +
+                                `*Novo Contacto - Website Dynavision*%0A` +
+                                `• *Nome:* ${firstName} ${lastName}%0A` +
+                                `• *Email:* ${email}%0A` +
+                                `• *Interesse:* ${interest}%0A` +
+                                `• *Mensagem:* ${msgContent}`;
+            
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${textMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
         }
-      };
-      scene.append(f);
-    }
-    const truck = mk('div','fire-item wiggleup','🚒'); truck.style.fontSize='4.5rem'; body.append(truck);
-  }
-  else if(id==='drawing') {
-    title.textContent = "Quadro de Desenho 📝";
-    const wrap = mk('div','drawing-canvas-wrap'); const cv = mk('canvas'); cv.id='draw-canvas'; wrap.append(cv); body.append(wrap);
-    const strip = mk('div','color-strip'); body.append(strip);
-    const tools = mk('div','tool-strip'); body.append(tools);
-    const stamps = mk('div','stamp-strip'); body.append(stamps);
-    let colors = ['#FF1744','#2979FF','#00E676','#FFEA00','#D500F9','#FF9100','#000000','#8D6E63'];
-    let curColor = colors[0]; let curTool = 'brush'; let curStamp = '⭐';
-    colors.forEach(c=>{
-      const s = mk('div','color-swatch'); s.style.backgroundColor=c; if(c===curColor)s.classList.add('selected');
-      s.onclick=()=>{ playTap(); document.querySelectorAll('.color-swatch').forEach(x=>x.classList.remove('selected')); s.classList.add('selected'); curColor=c; }; strip.append(s);
-    });
-    const bBtn = mk('button','tool-btn selected','🖌️'); bBtn.onclick=()=>{ playTap(); curTool='brush'; document.querySelectorAll('.tool-btn').forEach(x=>x.classList.remove('selected')); bBtn.classList.add('selected'); };
-    const sBtn = mk('button','tool-btn',' Stamp'); sBtn.onclick=()=>{ playTap(); curTool='stamp'; document.querySelectorAll('.tool-btn').forEach(x=>x.classList.remove('selected')); sBtn.classList.add('selected'); };
-    const cBtn = mk('button','tool-btn','✨ Limpar'); tools.append(bBtn,sBtn,cBtn);
-    let stampList = ['⭐','💖','🦄','🦕','🦁','🌸','🎈','🚗','🐱','🍦','🍎'];
-    stampList.forEach(st=>{
-      const btn = mk('button','stamp-btn',st); btn.onclick=()=>{ playTap(); curStamp=st; curTool='stamp'; document.querySelectorAll('.tool-btn').forEach(x=>x.classList.remove('selected')); sBtn.classList.add('selected'); }; stamps.append(btn);
-    });
-    let ctx = cv.getContext('2d'); let drawing = false;
-    setTimeout(()=>{
-      let rect = wrap.getBoundingClientRect(); cv.width = rect.width; cv.height = rect.width;
-      ctx.lineCap = 'round'; ctx.lineWidth = 9;
-    },100);
-    function getPos(e){
-      let rect = cv.getBoundingClientRect(); let clientX = e.touches ? e.touches[0].clientX : e.clientX; let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return { x: clientX - rect.left, y: clientY - rect.top };
-    }
-    function start(e){
-      drawing = true; let p = getPos(e);
-      if(curTool==='stamp'){ ctx.font = '36px serif'; ctx.fillText(curStamp, p.x-18, p.y+14); playPop(); drawing=false; incScore(); }
-      else { ctx.beginPath(); ctx.moveTo(p.x, p.y); }
-    }
-    function move(e){ if(!drawing)return; e.preventDefault(); let p = getPos(e); ctx.strokeStyle=curColor; ctx.lineTo(p.x, p.y); ctx.stroke(); }
-    function stop(){ drawing = false; }
-    cv.addEventListener('mousedown',start); cv.addEventListener('mousemove',move); window.addEventListener('mouseup',stop);
-    cv.addEventListener('touchstart',start,{passive:false}); cv.addEventListener('touchmove',move,{passive:false}); window.addEventListener('touchend',stop);
-    cBtn.onclick = () => { playSplash(); ctx.clearRect(0,0,cv.width,cv.height); };
-    window.stopDrawingMode = () => { window.removeEventListener('mouseup',stop); window.removeEventListener('touchend',stop); };
-  }
-  else if(id==='shapes') {
-    title.textContent = "Formas Geométricas 📐";
-    let shapes = [
-      {n:'Círculo', e:'🔴', v:`<circle cx="26" cy="26" r="22" fill="#FF1744"/>`},
-      {n:'Quadrado', e:'🟩', v:`<rect x="5" y="5" width="42" height="42" rx="4" fill="#00E676"/>`},
-      {n:'Estrela', e:'⭐', v:`<polygon points="26,2 33,18 50,18 37,28 42,45 26,35 10,45 15,28 2,18 19,18" fill="#FFEA00"/>`},
-      {n:'Triângulo', e:'🔺', v:`<polygon points="26,4 48,45 4,45" fill="#2979FF"/>`}
-    ];
-    let target = shapes[Math.floor(Math.random()*shapes.length)];
-    body.append(mk('div','question-label','Toca no '+target.n+'!'));
-    const display = mk('div','shape-display'); display.innerHTML = `<svg viewBox="0 0 52 52">${target.v}</svg>`; body.append(display);
-    const opts = mk('div','grid-2'); body.append(opts);
-    shapes.forEach(sh=>{
-      const card = mk('div','shape-opt'); card.innerHTML = `<svg viewBox="0 0 52 52">${sh.v}</svg><div>${sh.n}</div>`;
-      card.onclick=()=>{
-        if(sh===target){ card.classList.add('correct'); incScore(); triggerFeedback(true); setTimeout(()=>renderGame('shapes'),1500); }
-        else { card.classList.add('wrong'); triggerFeedback(false); setTimeout(()=>card.classList.remove('wrong'),500); }
-      };
-      opts.append(card);
-    });
-  }
-  else if(id==='numbers') {
-    title.textContent = "Contar Números 🔢";
-    let num = Math.floor(Math.random()*5)+1;
-    body.append(mk('div','question-label','Quantas bolinhas podes contar? 🔴'));
-    const dots = mk('div','dots-display'); for(let i=0;i<num;i++) dots.append(mk('div','dot'));
-    body.append(dots);
-    const opts = mk('div','grid-3'); body.append(opts);
-    let pool = [num]; while(pool.length<3){ let r=Math.floor(Math.random()*5)+1; if(!pool.includes(r))pool.push(r); }
-    pool.sort();
-    pool.forEach(n=>{
-      const opt = mk('div','num-opt', n);
-      opt.onclick=()=>{
-        if(n===num){ opt.classList.add('correct'); incScore(); triggerFeedback(true); setTimeout(()=>renderGame('numbers'),1500); }
-        else { opt.classList.add('wrong'); triggerFeedback(false); setTimeout(()=>opt.classList.remove('wrong'),500); }
-      };
-      opts.append(opt);
-    });
-  }
-  else if(id==='pet') {
-    title.textContent = "O Meu Gatinho 🐱";
-    body.append(mk('div','question-label','Trata do teu amigo fofinho! ❤️'));
-    const stage = mk('div','pet-stage'); const pet = mk('div','pet-display','🐱'); stage.append(pet); body.append(stage);
-    let state = { amor: 60, comida: 50 };
-    const bars = mk('div','needs-bar');
-    const r1 = mk('div','need-row'); r1.innerHTML='<div class="need-label">❤️ Amor</div><div class="need-bar-bg"><div class="need-bar-fill" id="b-love" style="background:var(--pink); width:60%"></div></div>';
-    const r2 = mk('div','need-row'); r2.innerHTML='<div class="need-label">🍼 Fome</div><div class="need-bar-bg"><div class="need-bar-fill" id="b-food" style="background:var(--orange); width:50%"></div></div>';
-    bars.append(r1,r2); body.append(bars);
-    const acts = mk('div','pet-actions');
-    const a1 = mk('button','pet-action-btn'); a1.innerHTML='<span class="pa-icon">🖐️</span><span>Dar Carinho</span>';
-    const a2 = mk('button','pet-action-btn'); a2.innerHTML='<span class="pa-icon">🍼</span><span>Dar Leite</span>';
-    acts.append(a1,a2); body.append(acts);
-    function update(){
-      document.getElementById('b-love').style.width = state.amor+'%';
-      document.getElementById('b-food').style.width = state.comida+'%';
-      if(state.amor>=100 && state.comida>=100){ incScore(5); triggerFeedback(true,'😺 O gatinho está super feliz e ama-te muito!'); state={amor:50,comida:50}; setTimeout(update,1500); }
-    }
-    a1.onclick=()=>{ playTone(600,'sine',0.15); pet.className='pet-display pet-happy'; pet.textContent='😸'; state.amor=Math.min(100,state.amor+25); update(); setTimeout(()=>{pet.className='pet-display';pet.textContent='🐱';},600); };
-    a2.onclick=()=>{ playTone(450,'sine',0.15); pet.className='pet-display pet-happy'; pet.textContent='😻'; state.comida=Math.min(100,state.comida+25); update(); setTimeout(()=>{pet.className='pet-display';pet.textContent='🐱';},600); };
-    pet.onclick=a1.onclick;
-  }
-  else if(id==='unicorn') {
-    title.textContent = "Caminho do Unicórnio 🌈";
-    let rColors = [
-      {n:'Vermelho', c:'#FF3D67'}, {n:'Laranja', c:'#FF9100'},
-      {n:'Amarelo', c:'#FFEA00'}, {n:'Verde', c:'#00E676'},
-      {n:'Azul', c:'#2979FF'}, {n:'Roxo', c:'#D500F9'}
-    ];
-    let target = rColors[Math.floor(Math.random()*rColors.length)];
-    body.append(mk('div','question-label','Toca na cor '+target.n+' do Arco-íris!'));
-    const track = mk('div','unicorn-track'); const rRow = mk('div','rainbow-row'); track.append(rRow); body.append(track);
-    rColors.forEach(rc=>{
-      const band = mk('button','rainbow-band'); band.style.backgroundColor = rc.c;
-      band.onclick=()=>{
-        if(rc===target){ band.classList.add('correct'); incScore(); triggerFeedback(true); setTimeout(()=>renderGame('unicorn'),1500); }
-        else { band.classList.add('wrong'); triggerFeedback(false); setTimeout(()=>band.classList.remove('wrong'),500); }
-      };
-      rRow.append(band);
-    });
-    const bot = mk('div','unicorn-row'); bot.innerHTML='<span>🦄</span>';
-    const tgtCloud = mk('div','cloud-target','☁️ '+target.n); bot.append(tgtCloud); body.append(bot);
-  }
-}
-
-/* ═══════════════════════════════════════
-   ═══ REAL CROP-BASED PUZZLE ENGINE ══════
-   ═══════════════════════════════════════ */
-const PUZZLE_DATA = {
-  'animals': { name: '🐶 Animais', item: '🦁', anim: 'dance', bg: '#E8F5E9', border: '#A5D6A7' },
-  'princesses': { name: '👸 Princesas', item: '👸', anim: 'spin', bg: '#FCE4EC', border: '#F48FB1' },
-  'unicorns': { name: '🦄 Unicórnios', item: '🦄', anim: 'bounce', bg: '#F3E5F5', border: '#CE93D8' },
-  'dinosaurs': { name: '🦕 Dinos', item: '🦖', anim: 'dance', bg: '#EFFFDE', border: '#C5E1A5' },
-  'vehicles': { name: '🚗 Veículos', item: '🚒', anim: 'bounce', bg: '#E3F2FD', border: '#90CAF9' },
-  'castles': { name: '🏰 Castelos', item: '🏰', anim: 'spin', bg: '#FFF3E0', border: '#FFCC80' },
-  'magic': { name: '🌈 Mágico', item: '🧚', anim: 'bounce', bg: '#FFFDE7', border: '#FFF59D' },
-  'sea': { name: '🐠 Mar', item: '🐬', anim: 'dance', bg: '#E0F7FA', border: '#80DEEA' }
-};
-
-let currentPuzzleCat = 'animals';
-let currentPuzzleDiff = 4;
-
-function initMegaPuzzle(container) {
-  container.append(mk('div', 'question-label', 'Constrói a imagem arrastando as peças! 🧩'));
-
-  // Abas de categorias
-  const catsBox = mk('div', 'puzzle-cats');
-  for (let key in PUZZLE_DATA) {
-    const btn = mk('div', `puzzle-cat-btn ${key === currentPuzzleCat ? 'active' : ''}`);
-    btn.innerHTML = `<span class="cat-ico">${PUZZLE_DATA[key].name.split(' ')[0]}</span><span>${PUZZLE_DATA[key].name.split(' ')[1]}</span>`;
-    btn.onclick = () => {
-      playTap();
-      currentPuzzleCat = key;
-      document.querySelectorAll('.puzzle-cat-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      setupPuzzleGame(container);
-    };
-    catsBox.append(btn);
-  }
-  container.append(catsBox);
-
-  // Níveis de dificuldade
-  const diffBox = mk('div', 'puzzle-diff-row');
-  const diffs = [
-    { p: 4, t: '4 Peças' },
-    { p: 6, t: '6 Peças' },
-    { p: 9, t: '9 Peças' },
-    { p: 12, t: '12 Peças' }
-  ];
-  diffs.forEach(d => {
-    const btn = mk('button', `puzzle-diff-btn ${d.p === currentPuzzleDiff ? 'active' : ''}`, d.t);
-    btn.onclick = () => {
-      playTap();
-      currentPuzzleDiff = d.p;
-      document.querySelectorAll('.puzzle-diff-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      setupPuzzleGame(container);
-    };
-    diffBox.append(btn);
-  });
-  container.append(diffBox);
-
-  const contentArea = mk('div', 'puzzle-content-area');
-  contentArea.id = 'puzzle-content-area';
-  container.append(contentArea);
-
-  setupPuzzleGame(container);
-}
-
-function setupPuzzleGame(container) {
-  const contentArea = document.getElementById('puzzle-content-area');
-  if(!contentArea) return;
-  contentArea.innerHTML = '';
-
-  const catInfo = PUZZLE_DATA[currentPuzzleCat];
-  const totalPieces = currentPuzzleDiff;
-
-  let cols = 2, rows = 2;
-  if (totalPieces === 6) { cols = 3; rows = 2; }
-  else if (totalPieces === 9) { cols = 3; rows = 3; }
-  else if (totalPieces === 12) { cols = 4; rows = 3; }
-
-  const boardWrapper = mk('div', 'puzzle-board-wrapper');
-  boardWrapper.style.backgroundColor = catInfo.bg;
-  boardWrapper.style.borderColor = catInfo.border;
-
-  // Gerar o Canvas dinâmico contendo o emoji correspondente em formato gigante de Imagem Integrada
-  const size = 280; 
-  const canvas = document.createElement('canvas');
-  canvas.width = size; canvas.height = size;
-  const ctx = canvas.getContext('2d');
-  
-  // Desenhar fundo interno bonito da imagem base do puzzle
-  ctx.fillStyle = catInfo.bg;
-  ctx.fillRect(0, 0, size, size);
-  ctx.font = `${size * 0.65}px serif`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(catInfo.item, size / 2, size / 2);
-  
-  // Converter o canvas criado na imagem de background para as divisões CSS das peças
-  const imgUrl = canvas.toDataURL();
-
-  const bgShadow = mk('div', 'puzzle-bg-shadow');
-  bgShadow.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-  bgShadow.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-
-  // Definir posições de grelha invisíveis no tabuleiro
-  for (let i = 0; i < totalPieces; i++) {
-    const cell = mk('div', 'puzzle-cell-target');
-    cell.id = `puzzle-target-${i}`;
-    bgShadow.append(cell);
-  }
-  boardWrapper.append(bgShadow);
-
-  // Caixa de animação de comemoração final
-  const celebBox = mk('div', 'puzzle-celebration-box');
-  celebBox.id = 'puzzle-celeb-box';
-  celebBox.textContent = catInfo.item;
-  if(catInfo.anim === 'dance') celebBox.classList.add('p-dance');
-  if(catInfo.anim === 'spin') celebBox.classList.add('p-spin');
-  if(catInfo.anim === 'bounce') celebBox.classList.add('p-bounce');
-  boardWrapper.append(celebBox);
-
-  contentArea.append(boardWrapper);
-
-  const tray = mk('div', 'puzzle-tray-container');
-  contentArea.append(tray);
-
-  // Criar a imagem esbatida permanente no fundo (background unificado semi-transparente)
-  bgShadow.style.backgroundImage = `url(${imgUrl})`;
-  bgShadow.style.backgroundSize = 'cover';
-  bgShadow.style.opacity = '0.9'; // Revelação inicial completa de 2 segundos
-
-  setTimeout(() => {
-    if(!document.getElementById('puzzle-content-area')) return;
-    bgShadow.style.opacity = '0.2'; // Esbater para início do jogo
-
-    const boardRect = boardWrapper.getBoundingClientRect();
-    const cellWidth = boardRect.width / cols;
-    const cellHeight = boardRect.height / rows;
-
-    let piecesData = [];
-    for (let i = 0; i < totalPieces; i++) {
-      piecesData.push({ id: i, placed: false });
-    }
-
-    const trayRect = tray.getBoundingClientRect();
-
-    piecesData.forEach((p, index) => {
-      const pieceEl = mk('div', 'puzzle-piece-draggable');
-      pieceEl.id = `puzzle-piece-${p.id}`;
-      pieceEl.style.width = `${cellWidth}px`;
-      pieceEl.style.height = `${cellHeight}px`;
-      
-      // PARTE CRUCIAL: Atribuir apenas o pedaço geométrico exato correspondente da Imagem Original
-      pieceEl.style.backgroundImage = `url(${imgUrl})`;
-      pieceEl.style.backgroundSize = `${boardRect.width}px ${boardRect.height}px`;
-      
-      const cIdx = p.id % cols;
-      const rIdx = Math.floor(p.id / cols);
-      const bgX = -(cIdx * cellWidth);
-      const bgY = -(rIdx * cellHeight);
-      pieceEl.style.backgroundPosition = `${bgX}px ${bgY}px`;
-
-      // Posicionar misturado/baralhado no tabuleiro inferior de seleção
-      const spaceX = (trayRect.width - cellWidth) / Math.ceil(totalPieces / 2);
-      const tRow = index % 2;
-      const tCol = Math.floor(index / 2);
-
-      const initLeft = boardRect.left - trayRect.left + (tCol * spaceX) + (Math.random() * 6 - 3);
-      const initTop = boardRect.height + 20 + (tRow * (cellHeight * 0.75));
-
-      pieceEl.style.left = `${initLeft}px`;
-      pieceEl.style.top = `${initTop}px`;
-
-      p.homeLeft = initLeft;
-      p.homeTop = initTop;
-      p.targetLeft = cIdx * cellWidth;
-      p.targetTop = rIdx * cellHeight;
-
-      let isDragging = false;
-      let startX = 0, startY = 0;
-      let elemStartX = 0, elemStartY = 0;
-
-      function dragStart(e) {
-        if (p.placed) return;
-        isDragging = true;
-        pieceEl.classList.remove('snap-back');
-        pieceEl.style.zIndex = "1000";
-        
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        
-        startX = clientX;
-        startY = clientY;
-        elemStartX = parseFloat(pieceEl.style.left);
-        elemStartY = parseFloat(pieceEl.style.top);
-        playTone(600, 'sine', 0.05, 0.1);
-      }
-
-      function dragMove(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-        const deltaX = clientX - startX;
-        const deltaY = clientY - startY;
-
-        const curL = elemStartX + deltaX;
-        const curT = elemStartY + deltaY;
-
-        pieceEl.style.left = `${curL}px`;
-        pieceEl.style.top = `${curT}px`;
-
-        const dist = Math.hypot(curL - p.targetLeft, curT - p.targetTop);
-        const tgtCell = document.getElementById(`puzzle-target-${p.id}`);
-        if (dist < 50) {
-          if (tgtCell) tgtCell.classList.add('glow');
-        } else {
-          if (tgtCell) tgtCell.classList.remove('glow');
-        }
-      }
-
-      function dragEnd() {
-        if (!isDragging) return;
-        isDragging = false;
-        pieceEl.style.zIndex = "50";
-
-        const curL = parseFloat(pieceEl.style.left);
-        const curT = parseFloat(pieceEl.style.top);
-        const dist = Math.hypot(curL - p.targetLeft, curT - p.targetTop);
-
-        const tgtCell = document.getElementById(`puzzle-target-${p.id}`);
-        if (tgtCell) tgtCell.classList.remove('glow');
-
-        if (dist < 50) {
-          // ENCAIXE PERFEITO (Snap Correto)
-          p.placed = true;
-          pieceEl.classList.add('placed');
-          pieceEl.style.left = `${p.targetLeft}px`;
-          pieceEl.style.top = `${p.targetTop}px`;
-          
-          playPop();
-          spawnStars(`${boardRect.left + p.targetLeft + cellWidth/2}px`, `${boardRect.top + p.targetTop + cellHeight/2}px`);
-          
-          const placedCount = piecesData.filter(x => x.placed).length;
-          // O fundo esbatido vai ganhando opacidade e nitidez em tempo real
-          bgShadow.style.opacity = `${0.22 + (placedCount / totalPieces) * 0.4}`;
-
-          if (placedCount === totalPieces) {
-            setTimeout(completePuzzleSequence, 500);
-          }
-        } else {
-          // Falha suave - retorna à bandeja
-          pieceEl.classList.add('snap-back');
-          pieceEl.style.left = `${p.homeLeft}px`;
-          pieceEl.style.top = `${p.homeTop}px`;
-          playTone(300, 'sine', 0.08, 0.08);
-        }
-      }
-
-      pieceEl.addEventListener('mousedown', dragStart);
-      window.addEventListener('mousemove', dragMove);
-      window.addEventListener('mouseup', dragEnd);
-
-      pieceEl.addEventListener('touchstart', dragStart, { passive: false });
-      window.addEventListener('touchmove', dragMove, { passive: false });
-      window.addEventListener('touchend', dragEnd);
-
-      boardWrapper.append(pieceEl);
-    });
-
-    function completePuzzleSequence() {
-      // Remover os recortes individuais para revelar a imagem unificada e limpa a 100%
-      piecesData.forEach(p => {
-        const el = document.getElementById(`puzzle-piece-${p.id}`);
-        if(el) el.style.opacity = '0';
-      });
-      bgShadow.style.opacity = '1';
-      
-      const celebBox = document.getElementById('puzzle-celeb-box');
-      if(celebBox) celebBox.style.display = 'flex';
-
-      incScore(totalPieces * 2);
-      triggerFeedback(true, '✨ Lindíssimo! Completaste o Puzzle! 🎉');
-
-      setTimeout(() => {
-        setupPuzzleGame(container);
-      }, 4200);
-    }
-
-  }, 2000);
-}
-</script>
- 
+    </script>
 </body>
 </html>
